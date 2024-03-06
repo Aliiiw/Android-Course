@@ -1,17 +1,32 @@
 package com.alirahimi.androidcourse
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alirahimi.androidcourse.databinding.ActivityMainBinding
+import com.alirahimi.androidcourse.databinding.DialogAddNewItemBinding
 import com.alirahimi.androidcourse.databinding.RecyclerViewBinding
 import com.alirahimi.androidcourse.feature.home.domain.data.model.Food
 import com.alirahimi.androidcourse.feature.home.presentation.ui.adapter.FoodAdapter
+import com.alirahimi.androidcourse.utils.NetworkChecker
 
 class MainActivity : AppCompatActivity() {
 
-    //1. private lateinit var binding: ActivityMainBinding
+    //region
 
-    private lateinit var binding: RecyclerViewBinding
+    //1. private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+
+    //private lateinit var binding: RecyclerViewBinding
+    private lateinit var broadcastReceiver: BroadcastReceiver
+    private var isNetworkConnected = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +34,16 @@ class MainActivity : AppCompatActivity() {
 
         //2. binding = ActivityMainBinding.inflate(layoutInflater)
 
-        binding = RecyclerViewBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        binding.buttonToggle.setOnClickListener {
+            Intent(this, MainActivity2::class.java).also {
+                startActivity(it)
+            }
+        }
+
 
         val foodList = arrayListOf(
             Food("Hamburger", "15", "3", "LA, USA", R.drawable.food1, 20, 4.5f),
@@ -43,14 +66,109 @@ class MainActivity : AppCompatActivity() {
         //3. create adapter for recycler
         //4. set adapter to recycler
         //5. set the layout manager
-        val adapter = FoodAdapter(foodList)
-        binding.recyclerMain.adapter = adapter
-        binding.recyclerMain.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val foodAdapter = FoodAdapter(foodList)
+        ///binding.recyclerMain.adapter = foodAdapter
+        //binding.recyclerMain.layoutManager =
+        // LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 //        binding.recyclerMain.initRecycler(
 //            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false),
 //            adapter
 //        )
+
+        // addNewFood(foodAdapter)
     }
 
+//    private fun addNewFood(adapter: FoodAdapter) {
+//
+//        binding.buttonAddNewFood.setOnClickListener {
+//            val dialog = DialogAddNewItemBinding.inflate(layoutInflater)
+//
+//            //Builder
+//
+//            val alertDialog = AlertDialog.Builder(this)
+//                .setView(dialog.root)
+//                .setCancelable(true)
+//                .create()
+//
+//
+//            alertDialog.show()
+//            dialog.dialogButtonDone.setOnClickListener {
+//
+//                if (
+//                    dialog.dialogEditNameFood.text?.isNotEmpty()!! &&
+//                    dialog.dialogEditFoodPrice.text?.isNotEmpty()!! &&
+//                    dialog.dialogEditFoodDistance.text?.isNotEmpty()!! &&
+//                    dialog.dialogEditFoodCity.text?.isNotEmpty()!!
+//                ) {
+//                    val name = dialog.dialogEditNameFood.text.toString()
+//                    val price = dialog.dialogEditFoodPrice.text.toString()
+//                    val distance = dialog.dialogEditFoodDistance.text.toString()
+//                    val city = dialog.dialogEditFoodCity.text.toString()
+//
+//                    val numberOfRating = (1..150).random()
+//                    //val numberOfRating = (1 until 150).random()
+//                    val ratingBarStar = (1..5).random().toFloat()
+//                    val itemImage = R.drawable.food1
+//
+////                    val minValue = 0f
+////                    val maxValue = 5f
+////                    val random = minValue + Random().nextFloat() * (maxValue - minValue)
+//
+//                    val newFood = Food(
+//                        name,
+//                        price,
+//                        distance,
+//                        city,
+//                        itemImage,
+//                        numberOfRating,
+//                        ratingBarStar
+//                    )
+//
+//                    adapter.addFood(newFood)
+//                    alertDialog.dismiss()
+//                    binding.recyclerMain.smoothScrollToPosition(7)
+//
+//                } else {
+//                    Toast.makeText(this, "لطفا مقادیر را کامل وارد کنید", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//        }
+//    }
+
+    private fun configBroadCastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                checkNetworkConnected()
+            }
+        }
+        val intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
+        this.registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    private fun checkNetworkConnected() {
+        isNetworkConnected = NetworkChecker(this).isInternetConnected
+    }
+
+    private fun openGoogle() {
+        val uri = Uri.parse("www.google.com")
+        Intent(Intent.ACTION_VIEW, uri).also {
+            startActivity(it)
+        }
+    }
+
+    private fun moveToShare() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, "Lets Install this App!")
+        intent.type = "text/plain"
+        startActivity(intent)
+    }
+
+    private fun moveToDial() {
+        val uri = Uri.parse("tel: 09179544301")
+        Intent(Intent.ACTION_DIAL, uri).also {
+            startActivity(it)
+        }
+    }
 }
 

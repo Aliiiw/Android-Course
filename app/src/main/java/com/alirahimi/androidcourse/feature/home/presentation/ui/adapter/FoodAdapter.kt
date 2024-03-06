@@ -66,4 +66,9 @@ class FoodAdapter(private val foods: ArrayList<Food>) :
         holder.bindData(position)
     }
 
+    fun addFood(newFood: Food) {
+        foods.add(0, newFood)
+        notifyItemInserted(0)
+    }
+
 }
