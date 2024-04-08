@@ -1,56 +1,76 @@
 package com.alirahimi.androidcourse
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alirahimi.androidcourse.databinding.RecyclerViewBinding
-import com.alirahimi.androidcourse.feature.home.domain.data.model.Food
-import com.alirahimi.androidcourse.feature.home.presentation.ui.adapter.FoodAdapter
+import com.alirahimi.androidcourse.databinding.ActivityMainBinding
+import com.alirahimi.androidcourse.feature.post.presentation.ui.adapter.PostAdapter
+import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModel
+import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    //1. private lateinit var binding: ActivityMainBinding
+    //region properties
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: PostViewModel
+    //endregion
 
-    private lateinit var binding: RecyclerViewBinding
-
-
+    //region lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initialBinding()
+        initialViewModel()
+        configViewModel()
+        callApi()
+    }
+    //endregion
 
-        //2. binding = ActivityMainBinding.inflate(layoutInflater)
-
-        binding = RecyclerViewBinding.inflate(layoutInflater)
+    //region methods
+    private fun initialBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val foodList = arrayListOf(
-            Food("Hamburger", "15", "3", "LA, USA", R.drawable.food1, 20, 4.5f),
-            Food("Grilled fish", "20", "2.1", "Tehran, Iran", R.drawable.food1, 10, 4f),
-            Food("Lasania", "40", "1.4", "Isfahan, Iran", R.drawable.food1, 30, 2f),
-            Food("pizza", "10", "2.5", "Zahedan, Iran", R.drawable.food1, 80, 1.5f),
-            Food("Sushi", "20", "3.2", "Mashhad, Iran", R.drawable.food1, 200, 3f),
-            Food("Roasted Fish", "40", "3.7", "Yazd, Iran", R.drawable.food1, 50, 3.5f),
-            Food("Fried chicken", "70", "3.5", "NewYork, USA", R.drawable.food1, 70, 2.5f),
-            Food("Vegetable salad", "12", "3.6", "Berlin, Germany", R.drawable.food1, 40, 4.5f),
-            Food("Grilled chicken", "10", "3.7", "Beijing, China", R.drawable.food1, 15, 5f),
-            Food("Baryooni", "16", "10", "Tehran, Iran", R.drawable.food1, 28, 4.5f),
-            Food("Ghorme Sabzi", "11.5", "7.5", "Karaj, Iran", R.drawable.food1, 27, 5f),
-            Food("Rice", "12.5", "2.4", "Shiraz, Iran", R.drawable.food1, 35, 2.5f),
-        )
-
-        //TODO make recycler view
-        //1. create view for recycler
-        //2. create item for recycler
-        //3. create adapter for recycler
-        //4. set adapter to recycler
-        //5. set the layout manager
-        val adapter = FoodAdapter(foodList)
-        binding.recyclerMain.adapter = adapter
-        binding.recyclerMain.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        binding.recyclerMain.initRecycler(
-//            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false),
-//            adapter
-//        )
     }
 
+    private fun initialViewModel() {
+        viewModel = ViewModelProvider(this, PostViewModelFactory())[PostViewModel::class.java]
+    }
+
+    private fun configViewModel() {
+        viewModel.posts.observe(this) { posts ->
+            val adapter = PostAdapter(posts)
+            binding.postRecyclerView.adapter = adapter
+            binding.postRecyclerView.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        }
+
+        viewModel.loadingState.observe(this){
+            if (it){
+                ////
+            }else {
+
+            }
+        }
+    }
+
+    private fun callApi() {
+
+        CoroutineScope(Dispatchers.Main).launch {
+            binding.constraintAll.visibility = View.INVISIBLE
+            binding.linearLoading.visibility = View.VISIBLE
+            delay(2000)
+            viewModel.getAllPost()
+            binding.constraintAll.visibility = View.VISIBLE
+            binding.linearLoading.visibility = View.GONE
+        }
+
+    }
+    //endregion
 }
 
