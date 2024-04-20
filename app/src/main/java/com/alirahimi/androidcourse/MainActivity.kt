@@ -1,5 +1,6 @@
 package com.alirahimi.androidcourse
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,8 @@ import com.alirahimi.androidcourse.databinding.ActivityMainBinding
 import com.alirahimi.androidcourse.feature.post.presentation.ui.adapter.PostAdapter
 import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModel
 import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModelFactory
+import com.alirahimi.androidcourse.shared_component.data.Constants
+import com.alirahimi.androidcourse.utils.extensions.putString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     //region properties
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: PostViewModel
+    private lateinit var sharedPreferences: SharedPreferences
     //endregion
 
     //region lifecycle
@@ -29,12 +33,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initialBinding()
         initialViewModel()
-        configViewModel()
-        callApi()
+        initialSharedPreference()
+        initialButton()
     }
     //endregion
 
     //region methods
+
+    private fun initialSharedPreference() {
+        sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_KEY, MODE_PRIVATE)
+        val token = sharedPreferences.getString(Constants.USER_TOKEN_KEY, "").toString()
+        if (token.isEmpty()) {
+            binding.titleLogin.visibility = View.VISIBLE
+            binding.titlePost.visibility = View.INVISIBLE
+        } else {
+            binding.titleLogin.visibility = View.INVISIBLE
+            binding.titlePost.visibility = View.VISIBLE
+        }
+    }
+
     private fun initialBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,46 +61,10 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, PostViewModelFactory())[PostViewModel::class.java]
     }
 
-    private fun configViewModel() {
-        viewModel.posts.observe(this) { posts ->
-            val list = posts.take(7)
-            val adapter = PostAdapter(list)
-
-            binding.postRecyclerView.adapter = adapter
-            binding.postRecyclerView.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            binding.postRecyclerView.addItemDecoration(
-                DividerItemDecoration(
-                    this@MainActivity,
-                    LinearLayoutManager.VERTICAL
-                )
-            )
-
-            binding.postRecyclerView.itemAnimator = DefaultItemAnimator()
-
-
+    private fun initialButton() {
+        binding.saveButton.setOnClickListener {
+            sharedPreferences.putString(Constants.USER_TOKEN_KEY, "hello")
         }
-
-        viewModel.loadingState.observe(this) {
-            if (it) {
-                ////
-            } else {
-
-            }
-        }
-    }
-
-    private fun callApi() {
-
-        CoroutineScope(Dispatchers.Main).launch {
-            binding.constraintAll.visibility = View.INVISIBLE
-            binding.linearLoading.visibility = View.VISIBLE
-            delay(2000)
-            viewModel.getAllPost()
-            binding.constraintAll.visibility = View.VISIBLE
-            binding.linearLoading.visibility = View.GONE
-        }
-
     }
     //endregion
 }
