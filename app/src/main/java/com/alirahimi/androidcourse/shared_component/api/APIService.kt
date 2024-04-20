@@ -1,4 +1,4 @@
-package com.alirahimi.androidcourse.shared_component
+package com.alirahimi.androidcourse.shared_component.api
 
 import com.alirahimi.androidcourse.feature.post.domain.data.model.PostResponse
 import retrofit2.Response

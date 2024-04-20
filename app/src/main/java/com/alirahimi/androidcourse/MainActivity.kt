@@ -5,6 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alirahimi.androidcourse.databinding.ActivityMainBinding
 import com.alirahimi.androidcourse.feature.post.presentation.ui.adapter.PostAdapter
@@ -44,16 +46,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun configViewModel() {
         viewModel.posts.observe(this) { posts ->
-            val adapter = PostAdapter(posts)
+            val list = posts.take(7)
+            val adapter = PostAdapter(list)
+
             binding.postRecyclerView.adapter = adapter
             binding.postRecyclerView.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding.postRecyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    this@MainActivity,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
+
+            binding.postRecyclerView.itemAnimator = DefaultItemAnimator()
+
+
         }
 
-        viewModel.loadingState.observe(this){
-            if (it){
+        viewModel.loadingState.observe(this) {
+            if (it) {
                 ////
-            }else {
+            } else {
 
             }
         }

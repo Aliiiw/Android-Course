@@ -1,6 +1,6 @@
-package com.alirahimi.androidcourse.shared_component
+package com.alirahimi.androidcourse.shared_component.api
 
-import com.alirahimi.androidcourse.shared_component.API.Companion.Constants.baseURL
+import com.alirahimi.androidcourse.shared_component.api.API.Companion.Constants.baseURL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

@@ -31,7 +31,11 @@ class PostAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PostResponse.PostResponseItem) {
             binding.title.text = item.title
-            binding.subTitle.text = item.id.toString()
+            binding.subTitle.text = item.body
+
+            binding.root.setOnClickListener {
+
+            }
         }
     }
 }

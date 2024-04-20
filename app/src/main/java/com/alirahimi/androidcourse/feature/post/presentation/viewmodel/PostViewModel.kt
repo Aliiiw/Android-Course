@@ -3,7 +3,7 @@ package com.alirahimi.androidcourse.feature.post.presentation.viewmodel
 import androidx.lifecycle.*
 import com.alirahimi.androidcourse.feature.post.domain.data.model.PostResponse
 import com.alirahimi.androidcourse.feature.post.domain.data.repository.PostRepository
-import com.alirahimi.androidcourse.shared_component.API
+import com.alirahimi.androidcourse.shared_component.api.API
 import kotlinx.coroutines.launch
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
