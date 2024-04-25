@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alirahimi.androidcourse.databinding.ActivityMainBinding
+import com.alirahimi.androidcourse.databinding.FragmentMainSecondBinding
 import com.alirahimi.androidcourse.feature.post.presentation.ui.adapter.PostAdapter
 import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModel
 import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModelFactory
@@ -43,13 +44,6 @@ class MainActivity : AppCompatActivity() {
     private fun initialSharedPreference() {
         sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_KEY, MODE_PRIVATE)
         val token = sharedPreferences.getString(Constants.USER_TOKEN_KEY, "").toString()
-        if (token.isEmpty()) {
-            binding.titleLogin.visibility = View.VISIBLE
-            binding.titlePost.visibility = View.INVISIBLE
-        } else {
-            binding.titleLogin.visibility = View.INVISIBLE
-            binding.titlePost.visibility = View.VISIBLE
-        }
     }
 
     private fun initialBinding() {
@@ -62,8 +56,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initialButton() {
-        binding.saveButton.setOnClickListener {
-            sharedPreferences.putString(Constants.USER_TOKEN_KEY, "hello")
+
+        binding.addButton.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .add(binding.mainContainer.id, MainSecondFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.replaceButton.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(binding.mainContainer.id, MainFragment())
+                .commit()
         }
     }
     //endregion
