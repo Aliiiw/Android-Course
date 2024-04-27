@@ -1,73 +1,74 @@
 package com.alirahimi.androidcourse
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import com.alirahimi.androidcourse.adapter.UsersAdapter
+import com.alirahimi.androidcourse.data.Constants
 import com.alirahimi.androidcourse.databinding.ActivityMainBinding
-import com.alirahimi.androidcourse.databinding.FragmentMainSecondBinding
-import com.alirahimi.androidcourse.feature.post.presentation.ui.adapter.PostAdapter
-import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModel
-import com.alirahimi.androidcourse.feature.post.presentation.viewmodel.PostViewModelFactory
-import com.alirahimi.androidcourse.shared_component.data.Constants
-import com.alirahimi.androidcourse.utils.extensions.putString
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.alirahimi.androidcourse.db.UserDatabase
 
 class MainActivity : AppCompatActivity() {
 
     //region properties
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: PostViewModel
-    private lateinit var sharedPreferences: SharedPreferences
+    private val userDb: UserDatabase by lazy {
+        Room.databaseBuilder(this, UserDatabase::class.java, Constants.USER_DATABASE)
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+    private val usersAdapter by lazy { UsersAdapter() }
     //endregion
 
     //region lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialBinding()
-        initialViewModel()
-        initialSharedPreference()
-        initialButton()
+        configListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkItems()
     }
     //endregion
 
     //region methods
-
-    private fun initialSharedPreference() {
-        sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_KEY, MODE_PRIVATE)
-        val token = sharedPreferences.getString(Constants.USER_TOKEN_KEY, "").toString()
-    }
-
     private fun initialBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
-    private fun initialViewModel() {
-        viewModel = ViewModelProvider(this, PostViewModelFactory())[PostViewModel::class.java]
+    private fun configListeners() {
+        binding.addUserButton.setOnClickListener {
+            startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
+        }
     }
 
-    private fun initialButton() {
+    private fun checkItems() {
+        binding.apply {
+            if (userDb.userDao().getAllUsers().isNotEmpty()) {
+                usersList.visibility = View.VISIBLE
+                emptyText.visibility = View.GONE
 
-        binding.addButton.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .add(binding.mainContainer.id, MainSecondFragment())
-                .addToBackStack(null)
-                .commit()
+                usersAdapter.differ.submitList(userDb.userDao().getAllUsers())
+                setupRecyclerView()
+
+            } else {
+                usersList.visibility = View.GONE
+                emptyText.visibility = View.VISIBLE
+            }
         }
+    }
 
-        binding.replaceButton.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(binding.mainContainer.id, MainFragment())
-                .commit()
+    private fun setupRecyclerView() {
+        binding.usersList.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = usersAdapter
         }
     }
     //endregion
