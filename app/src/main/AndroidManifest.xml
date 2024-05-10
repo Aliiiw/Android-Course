@@ -11,14 +11,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidCourse"
+        android:theme="@style/Theme.AndroidCourse."
         tools:targetApi="31">
-        <activity
-            android:name=".UpdateUserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddUserActivity"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
