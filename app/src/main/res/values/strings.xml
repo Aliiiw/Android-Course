@@ -1,21 +1,6 @@
 <resources>
-    <string name="app_name">Tesla Motors</string>
-    <string name="tap_to_open_the_car">Tap to open the car</string>
-    <string name="my_null_2">myNull</string>
-    <string name="up_to_4_hours">up to 4 hours</string>
-    <string name="battery_remaining">Battery Remaining    </string>
-    <string name="cybertruck">Cybertruck</string>
-    <string name="distance_remaining">Distance Remaining    </string>
-    <string name="up_to_130_kilometers">up to 130 kilometers</string>
-    <string name="sleeping_mode">sleeping mode</string>
-    <string name="engine">Engine</string>
-    <string name="tesla">Tesla</string>
-    <string name="climate">Climate</string>
-    <string name="a_c_is_on">A/C is ON</string>
-    <string name="tires">Tires</string>
-    <string name="low_pressure">Low pressure</string>
-    <string name="direction">Direction</string>
-    <string name="automatic_mode">Automatic Mode</string>
-    <string name="information">Information</string>
-    <string name="ultra_string_glass_and_polymer_layered_composite_can_absorb_and_redirect_impact_force_for_improved">Ultra-string glass and polymer-layered composite can absorb and redirect impact force for improved...</string>
+    <string name="app_name">notification</string>
+    <string name="show_notification">Show Notification</string>
+    <string name="big_picture_style">Big Picture Style</string>
+    <string name="big_text_style">Big Text Style</string>
 </resources>
