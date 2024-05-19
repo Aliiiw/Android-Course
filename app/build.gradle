@@ -46,6 +46,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //neumorphism
-    implementation 'com.github.fornewid:neumorphism:0.3.0'
+    //exo player
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.19.1'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.19.1'
 }

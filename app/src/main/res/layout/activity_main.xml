@@ -4,185 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/new_background"
     android:clipToPadding="false"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+    <!--    <VideoView-->
+    <!--        android:id="@+id/videoView"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintDimensionRatio="16:9"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/playButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="Play Video"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/videoView" />-->
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/my_null_2"
-            android:src="@drawable/image_tesla_photography"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <soup.neumorphism.NeumorphImageView
-            android:id="@+id/neumorph_image_5"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:padding="26dp"
-            android:src="@drawable/ic_statics"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:neumorph_backgroundColor="@color/new_background"
-            app:neumorph_shadowColorDark="@color/new_shadow1"
-            app:neumorph_shadowColorLight="@color/new_shadow2"
-            app:neumorph_shadowElevation="4dp"
-            app:neumorph_shapeAppearance="@style/NeumorphismImage"
-            app:neumorph_shapeType="pressed" />
-
-        <soup.neumorphism.NeumorphImageView
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:padding="26dp"
-            android:src="@drawable/ic_setting"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:neumorph_backgroundColor="@color/new_background"
-            app:neumorph_shadowColorDark="@color/new_shadow1"
-            app:neumorph_shadowColorLight="@color/new_shadow2"
-            app:neumorph_shadowElevation="4dp"
-            app:neumorph_shapeAppearance="@style/NeumorphismImage"
-            app:neumorph_shapeType="pressed" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="26dp" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/my_null_2"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_tesla1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/button_go_to_activity2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:paddingStart="12dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:neumorph_backgroundColor="@color/new_background"
-        app:neumorph_shadowColorDark="@color/new_shadow1"
-        app:neumorph_shadowColorLight="@color/new_shadow2"
-        app:neumorph_shadowElevation="4dp"
-        app:neumorph_shapeAppearance="@style/NeumorphismCard"
-        app:neumorph_shapeType="flat">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:contentDescription="@string/my_null_2"
-                android:src="@drawable/ic_lock" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tap_to_open_the_car"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </soup.neumorphism.NeumorphCardView>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cybertruck"
-            android:textColor="@color/white"
-            android:textSize="40sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/battery_remaining"
-                android:textColor="@color/text_gray"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/up_to_4_hours"
-                android:textColor="@color/text_white"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/distance_remaining"
-                android:textColor="@color/text_gray"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/up_to_130_kilometers"
-                android:textColor="@color/text_white"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

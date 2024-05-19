@@ -18,20 +18,4 @@
         <item name="fontFamily">@font/gilroy</item>
 
     </style>
-
-    <style name="NeumorphismImage">
-        <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">30dp</item>
-    </style>
-
-    <style name="NeumorphismCard">
-        <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">10dp</item>
-    </style>
-
-    <style name="neuButton">
-        <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">2dp</item>
-    </style>
-
 </resources>
