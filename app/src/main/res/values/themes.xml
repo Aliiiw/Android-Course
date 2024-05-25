@@ -1,14 +1,14 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.AndroidCourse." parent="Theme.Material3.Dark.NoActionBar">
 
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorAccent">@color/grey</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
 
     </style>
 </resources>

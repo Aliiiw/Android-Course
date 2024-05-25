@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">AndroidCourse</string>
-    <string name="music_name">Ranj 8</string>
-    <string name="zero">00:00</string>
-    <string name="now_playing">Now Playing</string>
-    <string name="now_pause">Now Pause</string>
-    <string name="singer_name"><![CDATA[DJ Vafa & DJ Soushi]]></string>
+    <string name="username">userName</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="turn_back">Turn Back</string>
 </resources>

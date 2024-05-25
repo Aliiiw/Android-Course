@@ -8,45 +8,41 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/userNameEditText"
+    <TextView
+        android:id="@+id/username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autofillHints="username"
-        android:hint="@string/username"
+        android:gravity="center"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="test" />
 
-    <EditText
-        android:id="@+id/passwordEditText"
+    <TextView
+        android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autofillHints="password"
-        android:hint="@string/password"
+        android:gravity="center"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        tools:text="text" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/turnBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:text="@string/login"
+        android:text="@string/turn_back"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
